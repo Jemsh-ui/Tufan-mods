@@ -1,162 +1,128 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUFAN MODS</title>
+    <title>PAISA DO TAB HI HOGA </title>
     <style>
+        /* General styling */
         body {
-            font-family: 'Courier New', bold;
-            background-color: #0d0d0d;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
         }
 
+        /* Container styling */
         .container {
-            width: 350px;
+            width: 420px;
             padding: 20px;
+            background: #0247FE;
             border-radius: 15px;
-            background: #1a1a1a;
-            box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 0 15px rgba(0, 255, 255, 0.4);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
 
+        /* Header styling */
         h1 {
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 102, 204, 1);
-            font-size: 1.6em;
-            margin-bottom: 20px;
+            color: #ff0000;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
         }
 
+        /* Box styling */
         .box {
-            padding: 15px;
             margin: 15px 0;
-            background: linear-gradient(135deg, #222, #333);
+            padding: 15px;
+            background: linear-gradient(145deg, #D891EF, #1a1a2b);
             border-radius: 12px;
-            border: 2px solid #ffffff;
-            box-shadow: inset 0 0 10px rgba(255, 0, 255, 0.5);
-            color: #ffffff;
+            border: 3px solid #0000ff;
+            color: #ff0000;
+        }
+
+        /* Period and result text */
+        #periodNumber, #currentResult {
             font-size: 1.2em;
-        }
-
-        #timer {
-            color: #00ffff;
             font-weight: bold;
-            font-size: 1.4em;
         }
 
-        #currentResult {
+        /* Timer text */
+        #timer {
             font-size: 1.3em;
-            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.7);
         }
 
-        .history-list {
-            list-style-type: none;
-            padding: 0;
-            font-size: 0.9em;
-            max-height: 200px;
+        /* History box */
+        .history-box {
+            background: #1a1a2e;
+            border: 4px solid #66FF00;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 20px;
             overflow-y: auto;
-            text-align: left;
         }
 
-        .history-item {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #F4BBFF;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 3px solid #66FF00;
             padding: 8px;
-            margin: 5px 0;
-            border-radius: 8px;
-            border-left: 3px solid #ff66cc;
-            box-shadow: 0 0 8px rgba(255, 102, 204, 0.3);
+            text-align: center;
+        }
+
+        /* Button styling */
+        .get-result-btn {
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .telegram-btn {
+            padding: 10px 20px;
+            background-color: #0088cc;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* Popup styling */
+        .popup-message {
+            display: none;
+            font-size: 1.1em;
+            color: #66FF00;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>TUFAN MODS</h1>
 
-    <div class="box">
-        <div>Period Number</div>
-        <div id="periodNumber">Loading...</div>
-    </div>
-
-    <div class="box">
-        <div>Timer</div>
-        <div id="timer">00:60</div>
-    </div>
-
-    <div class="box">
-        <div>Current Result</div>
-        <div id="currentResult">Waiting...</div>
-    </div>
-
-    <div class="box">
-        <div>History</div>
-        <ul id="history" class="history-list"></ul>
-    </div>
+    <a href="https://t.me/jemshmod" target="_blank">
+        <button class="telegram-btn">TELEGRAM CHANNEL</button>
+    </a>
 </div>
 
-<script>
-    const periodNumberElement = document.getElementById('periodNumber');
-    const timerElement = document.getElementById('timer');
-    const currentResultElement = document.getElementById('currentResult');
-    const historyElement = document.getElementById('history');
-
-    const results = [
-        'BIG+9', 'SMALL+2', 'BIG+6', 'SMALL+0', 'SMALL+2', 'BIG+8', 'BIG+6', 'SMALL+3', 'SMALL+1', 'SMALL+0', 
-        'SMALL+2', 'BIG+7', 'BIG+8', 'SMALL+4', 'BIG+5', 'SMALL+9', 'SMALL+1', 'BIG+9', 'BIG+6', 'SMALL+3', 
-        'BIG+5', 'BIG+8', 'BIG+5', 'SMALL+1', 'SMALL+0', 'SMALL+3'
-    ];
-    let currentPeriodNumber = 0;
-    let currentResultIndex = -1;
-    let lastDisplayedPeriod = -1;
-
-    function updatePeriodAndResult() {
-        const now = new Date();
-        const utcYear = now.getUTCFullYear();
-        const utcMonth = String(now.getUTCMonth() + 1).padStart(2, '0');
-        const utcDay = String(now.getUTCDate()).padStart(2, '0');
-        const utcHours = now.getUTCHours();
-        const utcMinutes = now.getUTCMinutes();
-        const totalMinutes = utcHours * 60 + utcMinutes;
-
-        currentPeriodNumber = 10001 + totalMinutes;
-        const periodString = `${utcYear}${utcMonth}${utcDay}1000${currentPeriodNumber}`;
-        periodNumberElement.textContent = periodString;
-
-        if (currentPeriodNumber !== lastDisplayedPeriod && currentResultIndex < results.length - 1) {
-            currentResultIndex++;
-            const result = results[currentResultIndex];
-            currentResultElement.textContent = result;
-
-            const historyItem = document.createElement('li');
-            historyItem.textContent = `Period: ${periodString}, Result: ${result}`;
-            historyItem.className = 'history-item';
-            historyElement.prepend(historyItem);
-
-            lastDisplayedPeriod = currentPeriodNumber;
-        }
-    }
-
-    function startTimer() {
-        setInterval(() => {
-            const now = new Date();
-            const remainingSeconds = 60 - now.getUTCSeconds();
-            const secondsDisplay = remainingSeconds.toString().padStart(2, '0');
-            timerElement.textContent = `00:${secondsDisplay}`;
-
-            if (remainingSeconds === 60) {
-                updatePeriodAndResult();
-            }
-        }, 1000);
-    }
-
-    window.onload = startTimer;
 </script>
 
-
-
-</body></html>
+</body>
+</html>.
